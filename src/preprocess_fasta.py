@@ -1,58 +1,57 @@
-import argparse
-import sys
-import os
-import numpy as np
-import pandas as pd
-import pdb
-
-parser = argparse.ArgumentParser(description = '''Read a fasta with >1 seq.
-                                                Write individual fasta files.
-                                                Save all sequence information to a csv.
-                                                ''')
-
-parser.add_argument('--fasta_file', nargs=1, type= str, default=sys.stdin, help = 'Fasta.')
-parser.add_argument('--outdir', nargs=1, type= str, default=sys.stdin, help = 'Path to output csv')
-
-##############FUNCTIONS##############
-def read_fasta(fasta_file):
-    """Read a fasta file
+def read_fasta(
+    fasta_file:str):
+    """Read a fasta file int dataframe
     """
+
+    from pandas import DataFrame
 
     ids = []
     seqs = []
 
     with open(fasta_file, 'r') as file:
-        for line in file:
-            line = line.rstrip()
-            if '>' in line:
-                ids.append(line[1:])
-            else:
-                seqs.append(line)
+        current_sequence = ''
+        current_id = ''
 
-    return ids, seqs
+        for line in file:
+            line = line.strip()
+            if line.startswith('>'):
+                # Save the previous sequence and ID
+                if current_sequence and current_id:
+                    
+                    ids.append(current_id)
+                    seqs.append(current_sequence)
+
+                # Get the new ID
+                # Remove the '>' character
+                # current_id = current_id 
+                current_id = line[1:].split('|')[0].strip()  
+                current_sequence = ''
+            else:
+                current_sequence += line
+
+        # Append the last sequence and ID
+        if current_sequence and current_id:
+            ids.append(current_id)
+            seqs.append(current_sequence)
+
+    # Create a DataFrame
+    fasta_df = DataFrame({'ID': ids, 'sequence': seqs})
+    return fasta_df
 
 def write_fasta(fasta_df, outdir):
     """Write individual fasta files
     """
 
-    for ind, row in fasta_df.iterrows():
-        with open(outdir+row.ID+'.fasta', 'w') as file:
-            file.write('>'+row.ID+'\n')
+    for _, row in fasta_df.iterrows():
+        with open(f'{outdir}/{row.ID}.fasta', 'w') as file:
+            file.write(f'>{row.ID}\n')
             file.write(row.sequence)
 
 
-##################MAIN#######################
-
-#Parse args
-args = parser.parse_args()
-ids, seqs = read_fasta(args.fasta_file[0])
-outdir = args.outdir[0]
-
-#Create a df
-fasta_df = pd.DataFrame()
-fasta_df['ID'] = ids
-fasta_df['sequence'] = seqs
-#Save df
-fasta_df.to_csv(outdir+'id_seqs.csv', index=None)
-#Write individual fastas
-write_fasta(fasta_df, outdir)
+def write_fasta_file_from_fasta_df(fasta_df, fasta_file):
+    """Write individual fasta files
+    """
+    with open(fasta_file, 'w') as file:
+        for _, row in fasta_df.iterrows():
+            file.write(f'>{row.ID}\n')
+            file.write(f'{row.sequence}\n')

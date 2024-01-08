@@ -39,7 +39,7 @@ from alphafold.model import model
 import pandas as pd
 import numpy as np
 #Data loading
-from tinyloader import DataLoader
+# from tinyloader import DataLoader
 # Internal import (7716).
 from collections import defaultdict
 import pdb
@@ -47,13 +47,13 @@ import pdb
 
 
 
-parser = argparse.ArgumentParser(description = '''Predict a set of putative PPIs given two lists of single chain protein sequences.''')
-parser.add_argument('--complex_id', nargs=1, type= str, default=sys.stdin, help = 'ID of complex.')
-parser.add_argument('--msa1', nargs=1, type= str, default=sys.stdin, help = 'Path to dir with single chain MSAs.')
-parser.add_argument('--msa2', nargs=1, type= str, default=sys.stdin, help = 'Path to dir with single chain MSAs.')
-parser.add_argument('--data_dir', nargs=1, type= str, default=sys.stdin, help = 'Path to directory of supporting data (params).')
-parser.add_argument('--max_recycles', nargs=1, type= int, default=10, help = 'Number of recyles through the model.')
-parser.add_argument('--output_dir', nargs=1, type= str, default=sys.stdin, help = 'Path to a directory that will store the results.')
+# parser = argparse.ArgumentParser(description = '''Predict a set of putative PPIs given two lists of single chain protein sequences.''')
+# parser.add_argument('--complex_id', nargs=1, type= str, default=sys.stdin, help = 'ID of complex.')
+# parser.add_argument('--msa1', nargs=1, type= str, default=sys.stdin, help = 'Path to dir with single chain MSAs.')
+# parser.add_argument('--msa2', nargs=1, type= str, default=sys.stdin, help = 'Path to dir with single chain MSAs.')
+# parser.add_argument('--data_dir', nargs=1, type= str, default=sys.stdin, help = 'Path to directory of supporting data (params).')
+# parser.add_argument('--max_recycles', nargs=1, type= int, default=10, help = 'Number of recyles through the model.')
+# parser.add_argument('--output_dir', nargs=1, type= str, default=sys.stdin, help = 'Path to a directory that will store the results.')
 
 
 #######################FUNCTIONS#######################
@@ -251,14 +251,14 @@ def main(num_ensemble,
   print(feature_dict['ID'], pdockq)
 
 
-################MAIN################
-#Parse args
-args = parser.parse_args()
+# ################MAIN################
+# #Parse args
+# args = parser.parse_args()
 
-main(num_ensemble=1,
-    complex_id=args.complex_id[0],
-    max_recycles=args.max_recycles[0],
-    data_dir=args.data_dir[0],
-    msa1=args.msa1[0],
-    msa2=args.msa2[0],
-    output_dir=args.output_dir[0])
+# main(num_ensemble=1,
+#     complex_id=args.complex_id[0],
+#     max_recycles=args.max_recycles[0],
+#     data_dir=args.data_dir[0],
+#     msa1=args.msa1[0],
+#     msa2=args.msa2[0],
+#     output_dir=args.output_dir[0])

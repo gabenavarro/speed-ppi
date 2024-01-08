@@ -1,0 +1,5 @@
+### Jupyter development ###
+notebook
+ipykernel
+ipython
+pyarrow
