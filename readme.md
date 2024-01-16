@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the modified Speed PPI repository. Originally, [https://github.com/patrickbryant1/SpeedPPI](SpeedPPI) was developed by [https://github.com/patrickbryant1](Patrick Bryant) and the `repository contains code for predicting a pairwise protein-protein interaction network from a set of protein sequences or two lists of sequences thought to interact`. This branch is designed to facilitate the modeling and prediction of protein-protein interactions, leveraging advanced computational techniques. This branch specifically simplifies the codebase with a dockerized environment, comprehensive setup documentation, Python script wrappers, and the inclusion of custom data models using Pydantic's BaseModel. The addition of these features make this repository more portable and easier to deploy on cloud resources.
+Welcome to the Speed PPI forked repository. Originally, [https://github.com/patrickbryant1/SpeedPPI](SpeedPPI) was developed by [https://github.com/patrickbryant1](Patrick Bryant) where the `repository contains code for predicting a pairwise protein-protein interaction network from a set of protein sequences or two lists of sequences thought to interact`. This fork is designed to facilitate the modeling and prediction of protein-protein interactions, leveraging advanced computational techniques. This fork specifically simplifies the codebase with a dockerized environment, comprehensive setup documentation, Python script wrappers, and the inclusion of custom data models using Pydantic's BaseModel. The addition of these features make this repository more portable and easier to deploy on cloud resources.
 
 ## Features
 
