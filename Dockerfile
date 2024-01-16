@@ -41,6 +41,7 @@ RUN pip install --upgrade pip \
 # Install source code
 COPY /src /app/src/
 COPY /alphafold /app/alphafold/
+COPY /scripts /app/scripts/
 COPY /cpu_hhblits.py /app/
 COPY /gpu_dockfold.py /app/
 WORKDIR /app

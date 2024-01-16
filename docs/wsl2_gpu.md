@@ -17,7 +17,6 @@
 
 Go to setting, resources, WSL integration, then enable integration for `Ubuntu-22.04` and hit refresh.
 
-
 2. Install CUDA drivers on Linux
 ```bash
 sudo apt-key del 7fa2af80 # Remove old key

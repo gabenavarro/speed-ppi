@@ -1,4 +1,4 @@
-from src.utils.jobs import MsaJob
+from src.utils.datatype import MsaJob
 from typing import Dict
 
 def _subprocess_hhblit_msa_from_task(

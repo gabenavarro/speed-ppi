@@ -1,4 +1,4 @@
-from src.utils.jobs import DockFoldJob
+from src.utils.datatype import DockFoldJob
 
 
 def _dockfold_modeling(
@@ -17,7 +17,7 @@ def _dockfold_modeling(
         * `output_dir` (str): Path to where results are written to. 
     '''
 
-    from src.run_alphafold_single import main
+    from src.wrapper.dockfold import wrapper_dockfold_modeling
     from src.utils.utils import create_directory
     from itertools import combinations, product
     import os
@@ -39,37 +39,44 @@ def _dockfold_modeling(
 
     msa_list_one = dockfold_job.msa_list_one
     msa_list_two = dockfold_job.msa_list_two
-
+    
     # Determine if all on all or few againt all
     if msa_list_two is None:
         modeling_tasks = list(combinations(msa_list_one, 2))
     else:
         modeling_tasks = [(f"{a}",f"{b}") for a,b in product(msa_list_two, msa_list_one)]
-
+    
+    logging.info(
+        '''
+        Number of jobs: %s
+        msa_list_one: %s
+        msa_list_two: %s
+        '''%(
+            len(modeling_tasks),
+            msa_list_one,
+            msa_list_two
+        )
+    )
+    
     # Start Modeling job pairwise
     for task in modeling_tasks:
+        print(task)
         msa_one = "%s/%s.a3m"%(msa_path,task[0])
         msa_two = "%s/%s.a3m"%(msa_path,task[1])
         if os.path.isfile(msa_one) and os.path.isfile(msa_two):
             complex_id = "%s-%s"%(task[0],task[1])
             result_path = f"{output_dir}/pred{complex_id}/"
             create_directory(result_path)
-            try:
-                main(
-                    num_ensemble=1,
-                    complex_id=complex_id,
-                    max_recycles=max_recycles,
-                    data_dir=data_dir,
-                    msa1=msa_one,
-                    msa2=msa_two,
-                    output_dir=result_path
-                )
-            except Exception as e:
-                logging.warning(
-                    f"""
-                    Could not process: {complex_id}
-                    """
-                )
+            wrapper_dockfold_modeling(
+                num_ensemble=1,
+                complex_id=complex_id,
+                max_recycles=max_recycles,
+                data_dir=data_dir,
+                msa1=msa_one,
+                msa2=msa_two,
+                output_dir=result_path
+            )
+
     return
 
 

@@ -178,5 +178,7 @@ cython_debug/
 #.idea/
 
 # Secrets
-data/
 gcp-service-key.json
+pipeline/
+/notebooks/vertex_ai.ipynb
+/data/string_db
